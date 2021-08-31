@@ -1,0 +1,9 @@
+<!-- connect database with php -->
+
+<?php
+    require_once 'config/config.php';
+
+    $conn= new PDO(DBDRIVE.':host='.DBHOST.';dbname='.DBNAME, DBUSER, DBPASS, array(PDO::MYSQL_ATTR_INIT_COMMAND=>"SET NAMES utf8"));
+    //connecting database and making a command to auto-execute when connect to the MYSQL
+    //It will transform in utf8
+?>
