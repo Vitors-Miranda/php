@@ -58,11 +58,21 @@
                 if($error){
                     echo $error;
                 }else{
-                    echo "Name: $name <br>";
-                    echo "Email: $email <br>";
-                    echo "Telephone: $tel <br>";
+                    //separating ddd from tel and taking - out
+                    $arrayTel= explode(" ", $tel);
+                    $ddd= $arrayTel[0];
+                    $cell= str_replace("-","", $arrayTel[1]);
+                    
+                    //inserting values
+                    $sql= "INSERT INTO tb_data VALUES (0, :name, :email, :ddd, :cell)";
+                    $stmt= $conn -> prepare($sql);
+                    //avoiding sql injection
+                    $stmt -> bindParam(':name', $name);
+                    $stmt -> bindParam(':email', $email);
+                    $stmt -> bindParam(':ddd', $ddd);
+                    $stmt -> bindParam(':cell', $cell);
+                    $stmt -> execute();
                 }
-
             ?>
         </div>
     </main>
