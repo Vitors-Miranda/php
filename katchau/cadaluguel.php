@@ -1,19 +1,14 @@
 <?php
-    //obs: antes de colocar o código, tem que ir no banco de dados  do katchau, na tabela 'aluguel',
-    //aba "estrutura" e modificar os campos 'idcliente' e o 'idcarro' da tabela de alguel para nome_cliente e 
-    //marca_modelo respectivamente. Em ambos mudar o tipo para VARCHAR e tamanho para 100.
-    require_once '/lib/conn.php';
+require_once 'lib/conn.php';
 
-    $sqlBuscaCarros = 'SELECT * FROM carros WHERE disponibilidade = 1';
-    $BuscaCarros = $conn->query($sqlBuscaCarros);
-    $carros = $BuscaCarros->fetchAll(PDO::FETCH_OBJ);
-    //Isto irá verificar se o carro está disponível e pegará sua marca-modelo.
-    $sqlBuscaClientes = 'SELECT * FROM clientes';
-    $buscaClientes = $conn -> query($sqlBuscaClientes);
-    $clientes = $buscaClientes->fetchAll(PDO::FETCH_OBJ);
-    //Isto irá pegar o nome do cliente.
+$sqlBuscaCarros = 'SELECT * FROM carros WHERE disponibilidade = 1';
+$buscaCarros = $conn->query($sqlBuscaCarros);
+$carros = $buscaCarros->fetchAll(PDO::FETCH_OBJ);
+
+$sqlBuscaClientes = 'SELECT * FROM clientes';
+$buscaClientes = $conn->query($sqlBuscaClientes);
+$clientes = $buscaClientes->fetchAll(PDO::FETCH_OBJ);
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,34 +43,29 @@
                         <div class="form-group" id="carro"><label for="carro">Carro</label>
                             <select name="carro" id="carro" class="form-control">
                                 <option value="">Selecione um Carro</option>
-                                <?php
-                                    foreach($carros as $carro){
-
-                                ?>
-                                    <option value="<?= $carro->marca.'-'.
-                                    $carro->modelo ?>">
-                                    <?= $carro->marca.'-'.$carro->modelo ?>
-                                    </option>
-                                <?php
-                                    }
-                                ?>
-                                <!-- está estrutura é feita para inserir todas marca-modelo dos carros no combobox do aluguel automaticamente. -->
+                        <?php
+                            foreach ($carros as $carro){
+                        ?>
+                        <option value="<?= $carro->id_carro.'|'.$carro->marca.'-'.$carro->modelo ?>">
+                        <?= $carro->marca.'-'.$carro->modelo ?>
+                        </option>
+                        <?php
+                            }
+                        ?>
                             </select>
                         </div>
                         <div class="form-group" id="cliente"><label for="cliente">Cliente</label>
                             <select name="cliente" id="cliente" class="form-control">
                                 <option value="">Selecione um Cliente</option>
-                                <?php
-                                    foreach($clientes as $cliente){
-
-                                ?>
-                                    <option value="<?= $cliente->nome ?>">
-                                    <?= $cliente->nome?>
-                                    </option>
-                                <?php
-                                    }
-                                ?>
-                                <!-- Está estrutura é feita para inserir todos noomes no combobox do cliente do aluguel automaticamente-->
+                        <?php
+                            foreach ($clientes as $cliente){
+                        ?>
+                        <option value="<?= $cliente->nome ?>">
+                            <?= $cliente->nome ?>
+                        </option>
+                        <?php
+                            }
+                        ?>
                             </select>
                         </div>
                         <div class="form-group" id="data"><label for="data">Data da retirada</label>

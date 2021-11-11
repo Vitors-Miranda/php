@@ -32,15 +32,46 @@
                 <thead>
                     <tr>
                         <td scope="col">#</td>
-                        <td scope="col">Marca - Modelo</td>
+                        <td scope="col">Modelo - Marca</td>
                         <td scope="col">Placa</td>
                         <td scope="col">Valor da Diária (R$)</td>
                         <td scope="col">Disponibilidade</td>
-                        <td scope="col">Excluir</td>
                     </tr>
                 </thead>
                 <tbody>
-                  
+                <?php
+                    require_once 'lib/conn.php';
+                    $sql = "SELECT * FROM carros";
+                    $listaCarros = $conn->query($sql);
+                    $carros = $listaCarros->fetchAll(PDO::FETCH_OBJ);
+                    foreach($carros as $carro){
+                  ?>
+                  <tr>
+                    <td><?= $carro->id_carro ?></td>
+                    <td><?= $carro->marca.' - '.$carro->modelo ?></td>
+                    <td><?= $carro->placa ?></td>
+                    <td><?= number_format($carro->diaria,2,',','.') ?></td>
+                    <td>
+                      <?php
+                       if($carro->disponibilidade == 1){
+                      ?>
+                        <button class="btn btn-outline-success">
+                        <i class="far fa-thumbs-up"></i>
+                        </button> 
+                      <?php
+                       } else{
+                      ?>
+                       <button class="btn btn-outline-danger">
+                        <i class="far fa-thumbs-down"></i>
+                        </button>
+                      <?php
+                       }
+                      ?>
+                    </td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
                 </tbody>
             </table>
           </div>

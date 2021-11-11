@@ -35,11 +35,25 @@
                         <td scope="col">Nome</td>
                         <td scope="col">Endereço</td>
                         <td scope="col">E-mail</td>
-                        <td scope="col">Excluir</td>
                     </tr>
                 </thead>
                 <tbody>
-                  
+                  <?php
+                    require_once 'lib/conn.php';
+                    $sql = "SELECT * FROM clientes";
+                    $listaClientes = $conn->query($sql);
+                    $clientes = $listaClientes->fetchAll(PDO::FETCH_OBJ);
+                    foreach($clientes as $cliente){
+                  ?>
+                  <tr>
+                    <td><?= $cliente->id_cliente ?></td>
+                    <td><?= $cliente->nome ?></td>
+                    <td><?= $cliente->endereco ?></td>
+                    <td><?= $cliente->email ?></td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
                 </tbody>
             </table>
           </div>

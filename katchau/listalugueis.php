@@ -41,7 +41,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            <?php
+                                require_once 'lib/conn.php';
+                                $sql = "SELECT * FROM aluguel";
+                                $stmt = $conn->query($sql);
+                                $alugueis = $stmt->fetchAll(PDO::FETCH_OBJ);
+                                foreach($alugueis as $aluguel){
+                            ?>
+                            <tr>
+                                <td><?= $aluguel->id_aluguel?></td>
+                                <td><?= $aluguel->nome_cliente?></td>
+                                <td><?= $aluguel->marca_modelo?></td>
+                                <td><?= date('d/m/y',strtotime($aluguel->data))?></td>
+                                <td><?= date('d/m/y',strtotime($aluguel->dataentrega))?></td>
+                                <td><?= number_format($aluguel->valor_aluguel,2,',','.')?></td>
+                                <td>
+                                    <?php
+                                    if ($aluguel->pago == 0){
+                                    ?>
+                                        <a href="#" class="btn btn-outline-danger">
+                                        <i class="far fa-thumbs-down"></i>
+                                        </a>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <a href="#" class="btn btn-outline-success">
+                                        <i class="far fa-thumbs-up"></i>
+                                        </a>
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                            <?php
+                                }
+                            ?>
                         </tbody>
                     </table>
                     
